@@ -3,9 +3,7 @@ import './App.css'
 import { Container, Stack, Button } from '@mui/material'
 import Product from './component/Product'
 import { useSelector, useDispatch } from 'react-redux'
-import { setProducts } from './redux/reducers/productListSlice'
-import { setCartItems } from './redux/reducers/cartItemListSlice'
-import { getProductsData } from './utils/utils'
+import { getProductsData, onBuy } from './utils/utils'
 
 function App () {
   const dispatch = useDispatch()
@@ -44,12 +42,12 @@ function App () {
   //   }
   // }
 
-  const onBuy = () => {
-    dispatch(setProducts(
-      products.map((product) => ({ ...product, qty: 0 }))
-    ))
-    dispatch(setCartItems([]))
-  }
+  // const onBuy = () => {
+  //   dispatch(setProducts(
+  //     products.map((product) => ({ ...product, qty: 0 }))
+  //   ))
+  //   dispatch(setCartItems([]))
+  // }
 
   useEffect(() => {
     getProductsData(dispatch)
@@ -63,7 +61,7 @@ function App () {
 
   return (
     <Container>
-      <Button onClick={() => onBuy()}>Buy Products</Button>
+      <Button onClick={() => onBuy(products, dispatch)}>Buy Products</Button>
       <Stack spacing={2}>
         {productListComponent}
       </Stack>

@@ -64,3 +64,10 @@ export const onRemove = (products, cartItems, product, dispatch) => {
     }
   }
 }
+
+export const onBuy = (products, dispatch) => {
+  dispatch(setProducts(
+    products.map((product) => ({ ...product, qty: 0 }))
+  ))
+  dispatch(setCartItems([]))
+}
