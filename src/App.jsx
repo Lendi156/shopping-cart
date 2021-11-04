@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import './App.css'
-import { Container, Grid } from '@mui/material'
+import { Container } from '@mui/material'
+import { Route, Routes } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { getProductsData } from './utils/utils'
 import Home from './pages/Home'
@@ -15,14 +16,10 @@ function App () {
 
   return (
     <Container>
-      <Grid container>
-        <Grid item>
-          <Home />
-        </Grid>
-        <Grid item>
-          <CheckOut />
-        </Grid>
-      </Grid>
+      <Routes>
+        <Route path="/" element={<Home />}/>
+        <Route path="/CheckOut" element={<CheckOut />}/>
+      </Routes>
     </Container>
   )
 }
