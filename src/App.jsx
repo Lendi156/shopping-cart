@@ -44,13 +44,44 @@ function App () {
     }
   }
 
+  const onRemove = (product) => {
+    const exist = cartItems.find((x) => x.id === product.id)
+    const productexist = products.find((x) => x.id === product.id)
+    if (cartItems.length > 0) {
+      if (productexist.qty === 1) {
+        dispatch(setProducts(
+          products.map((x) =>
+            x.id === product.id ? { ...productexist, qty: 0 } : x
+          )
+        ))
+      } else {
+        dispatch(setProducts(
+          products.map((x) =>
+            x.id === product.id ? { ...productexist, qty: productexist.qty - 1 } : x
+          )
+        ))
+      }
+      if (exist.qty === 1) {
+        dispatch(setCartItems(
+          cartItems.filter((x) => x.id !== product.id)
+        ))
+      } else {
+        dispatch(setCartItems(
+          cartItems.map((x) =>
+            x.id === product.id ? { ...exist, qty: exist.qty - 1 } : x
+          )
+        ))
+      }
+    }
+  }
+
   useEffect(() => {
     productsData()
   }, [])
 
   products.forEach((product) => {
     productListComponent.push(
-      <Product product={product} onAdd={onAdd}/>
+      <Product product={product} onAdd={onAdd} onRemove={onRemove}/>
     )
   })
 
