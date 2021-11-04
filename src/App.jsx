@@ -5,36 +5,37 @@ import Product from './component/Product'
 import { useSelector, useDispatch } from 'react-redux'
 import { setProducts } from './redux/reducers/productListSlice'
 import { setCartItems } from './redux/reducers/cartItemListSlice'
+import { getProductsData } from './utils/utils'
 
 function App () {
   const dispatch = useDispatch()
   const productListComponent = []
   const products = useSelector((state) => state.products.products)
   const cartItems = useSelector((state) => state.cartItems.cartItems)
-  const productsData = async () => {
-    const response = await fetch('https://jsonplaceholder.typicode.com/todos')
-    const responseJson = await response.json()
-    const data = []
-    await responseJson.forEach((product) =>
-      data.push({ ...product, qty: 0 })
-    )
-    dispatch(setProducts(data))
-  }
+  // const getProductsData = async () => {
+  //   const response = await fetch('https://jsonplaceholder.typicode.com/todos')
+  //   const responseJson = await response.json()
+  //   const data = []
+  //   await responseJson.forEach((product) =>
+  //     data.push({ ...product, qty: 0 })
+  //   )
+  //   dispatch(setProducts(data))
+  // }
 
   const onAdd = (product) => {
-    const exist = cartItems.find((x) => x.id === product.id)
-    const productexist = products.find((x) => x.id === product.id)
+    const productInCartItemsexist = cartItems.find((cartItem) => cartItem.id === product.id)
+    const productexist = products.find((productTarget) => productTarget.id === product.id)
     if (productexist) {
       dispatch(setProducts(
-        products.map((x) =>
-          x.id === product.id ? { ...productexist, qty: productexist.qty + 1 } : x
+        products.map((productTarget) =>
+          productTarget.id === product.id ? { ...productexist, qty: productexist.qty + 1 } : productTarget
         )
       ))
     }
-    if (exist) {
+    if (productInCartItemsexist) {
       dispatch(setCartItems(
-        cartItems.map((x) =>
-          x.id === product.id ? { ...exist, qty: exist.qty + 1 } : x
+        cartItems.map((cartItem) =>
+          cartItem.id === product.id ? { ...productInCartItemsexist, qty: productInCartItemsexist.qty + 1 } : cartItem
         )
       ))
     } else {
@@ -45,30 +46,30 @@ function App () {
   }
 
   const onRemove = (product) => {
-    const exist = cartItems.find((x) => x.id === product.id)
-    const productexist = products.find((x) => x.id === product.id)
+    const productInCartItemsexist = cartItems.find((cartItem) => cartItem.id === product.id)
+    const productexist = products.find((productTarget) => productTarget.id === product.id)
     if (cartItems.length > 0) {
       if (productexist.qty === 1) {
         dispatch(setProducts(
-          products.map((x) =>
-            x.id === product.id ? { ...productexist, qty: 0 } : x
+          products.map((productTarget) =>
+            productTarget.id === product.id ? { ...productexist, qty: 0 } : productTarget
           )
         ))
       } else {
         dispatch(setProducts(
-          products.map((x) =>
-            x.id === product.id ? { ...productexist, qty: productexist.qty - 1 } : x
+          products.map((productTarget) =>
+            productTarget.id === product.id ? { ...productexist, qty: productexist.qty - 1 } : productTarget
           )
         ))
       }
-      if (exist.qty === 1) {
+      if (productInCartItemsexist.qty === 1) {
         dispatch(setCartItems(
-          cartItems.filter((x) => x.id !== product.id)
+          cartItems.filter((cartItem) => cartItem.id !== product.id)
         ))
       } else {
         dispatch(setCartItems(
-          cartItems.map((x) =>
-            x.id === product.id ? { ...exist, qty: exist.qty - 1 } : x
+          cartItems.map((cartItem) =>
+            cartItem.id === product.id ? { ...productInCartItemsexist, qty: productInCartItemsexist.qty - 1 } : cartItem
           )
         ))
       }
@@ -83,7 +84,7 @@ function App () {
   }
 
   useEffect(() => {
-    productsData()
+    getProductsData(dispatch)
   }, [])
 
   products.forEach((product) => {
