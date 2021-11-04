@@ -19,16 +19,38 @@ function App () {
       data.push({ ...product, qty: 0 })
     )
     dispatch(setProducts(data))
-    dispatch(setCartItems(data))
+  }
+
+  const onAdd = (product) => {
+    const exist = cartItems.find((x) => x.id === product.id)
+    const productexist = products.find((x) => x.id === product.id)
+    if (productexist) {
+      dispatch(setProducts(
+        products.map((x) =>
+          x.id === product.id ? { ...productexist, qty: productexist.qty + 1 } : x
+        )
+      ))
+    }
+    if (exist) {
+      dispatch(setCartItems(
+        cartItems.map((x) =>
+          x.id === product.id ? { ...exist, qty: exist.qty + 1 } : x
+        )
+      ))
+    } else {
+      dispatch(setCartItems(
+        [...cartItems, { ...product, qty: 1 }]
+      ))
+    }
   }
 
   useEffect(() => {
     productsData()
   }, [])
-  console.log(cartItems)
+
   products.forEach((product) => {
     productListComponent.push(
-      <Product product={product}/>
+      <Product product={product} onAdd={onAdd}/>
     )
   })
 
