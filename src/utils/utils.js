@@ -33,3 +33,34 @@ export const onAdd = (products, cartItems, product, dispatch) => {
     ))
   }
 }
+
+export const onRemove = (products, cartItems, product, dispatch) => {
+  const productInCartItemsexist = cartItems.find((cartItem) => cartItem.id === product.id)
+  const productexist = products.find((productTarget) => productTarget.id === product.id)
+  if (cartItems.length > 0) {
+    if (productexist.qty === 1) {
+      dispatch(setProducts(
+        products.map((productTarget) =>
+          productTarget.id === product.id ? { ...productexist, qty: 0 } : productTarget
+        )
+      ))
+    } else {
+      dispatch(setProducts(
+        products.map((productTarget) =>
+          productTarget.id === product.id ? { ...productexist, qty: productexist.qty - 1 } : productTarget
+        )
+      ))
+    }
+    if (productInCartItemsexist.qty === 1) {
+      dispatch(setCartItems(
+        cartItems.filter((cartItem) => cartItem.id !== product.id)
+      ))
+    } else {
+      dispatch(setCartItems(
+        cartItems.map((cartItem) =>
+          cartItem.id === product.id ? { ...productInCartItemsexist, qty: productInCartItemsexist.qty - 1 } : cartItem
+        )
+      ))
+    }
+  }
+}
