@@ -1,11 +1,11 @@
 import React from 'react'
 import { Container, Button, Stack } from '@mui/material'
-import { useSelector, useDispatch } from 'react-redux'
-import { onBuy } from '../utils/utils'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import Product from '../component/Product'
 
 export default function Home () {
-  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const productListComponent = []
   const products = useSelector((state) => state.products.products)
   products.forEach((product) => {
@@ -15,7 +15,7 @@ export default function Home () {
   })
   return (
     <Container>
-        <Button onClick={() => onBuy(products, dispatch)}>Buy Products</Button>
+        <Button onClick={() => navigate('/CheckOut')}>CheckOut</Button>
         <Stack spacing={2}>
             {productListComponent}
         </Stack>
