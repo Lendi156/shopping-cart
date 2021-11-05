@@ -3,6 +3,7 @@ import { Container, Button, Stack } from '@mui/material'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Product from '../component/Product'
+import { nextPage } from '../utils/utils'
 
 export default function Home () {
   const navigate = useNavigate()
@@ -17,21 +18,19 @@ export default function Home () {
     )
   })
 
-  const nextPage = () => {
-    setFirst(first + 10)
-    setLast(last + 10)
-  }
+  // const nextPage = () => {
+  //   setFirst(first + 10)
+  //   setLast(last + 10)
+  // }
   const prevPage = () => {
-    if (first !== 0) {
-      setFirst(first - 10)
-      setLast(last - 10)
-    }
+    setFirst(first - 10)
+    setLast(last - 10)
   }
   return (
     <Container>
         <Button onClick={() => navigate('/CheckOut')}>CheckOut</Button>
         {first === 0 ? null : <Button onClick={() => prevPage()}>Previous</Button>}
-        {last === products.length ? null : <Button onClick={() => nextPage()}>Next</Button>}
+        {last === products.length ? null : <Button onClick={() => nextPage(first, last, setFirst, setLast)}>Next</Button>}
         <Stack spacing={2}>
             {productListComponent}
         </Stack>

@@ -72,3 +72,8 @@ export const onBuy = (products, dispatch, navigate) => {
   dispatch(setCartItems([]))
   navigate('/')
 }
+
+export const nextPage = (first, last, setFirst, setLast) => {
+  setFirst(first + 10)
+  setLast(last + 10)
+}
