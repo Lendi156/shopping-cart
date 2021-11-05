@@ -11,6 +11,7 @@ export default function Home () {
   const [last, setLast] = useState(10)
   const productListComponent = []
   const products = useSelector((state) => state.products.products)
+  const cartItems = useSelector((state) => state.cartItems.cartItems)
   const tenProducts = products.slice(first, last)
   tenProducts.forEach((product) => {
     productListComponent.push(
@@ -20,7 +21,7 @@ export default function Home () {
 
   return (
     <Container>
-        <Button onClick={() => navigate('/CheckOut')}>CheckOut</Button>
+        {cartItems.length > 0 ? <Button onClick={() => navigate('/CheckOut')}>CheckOut</Button> : null}
         {first === 0 ? null : <Button onClick={() => prevPage(first, last, setFirst, setLast)}>Previous</Button>}
         {last === products.length ? null : <Button onClick={() => nextPage(first, last, setFirst, setLast)}>Next</Button>}
         <Stack spacing={2}>
