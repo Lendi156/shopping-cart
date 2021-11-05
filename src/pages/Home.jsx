@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { Container, Button, Stack } from '@mui/material'
+import { Container, Button, Stack, Fab } from '@mui/material'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Product from '../component/Product'
 import { nextPage, prevPage } from '../utils/utils'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 
 export default function Home () {
   const navigate = useNavigate()
@@ -20,13 +21,32 @@ export default function Home () {
   })
 
   return (
-    <Container>
-        {cartItems.length > 0 ? <Button onClick={() => navigate('/CheckOut')}>CheckOut</Button> : null}
-        {first === 0 ? null : <Button onClick={() => prevPage(first, last, setFirst, setLast)}>Previous</Button>}
-        {last === products.length ? null : <Button onClick={() => nextPage(first, last, setFirst, setLast)}>Next</Button>}
-        <Stack spacing={2}>
-            {productListComponent}
+    <Container maxWidth="sm">
+        <Stack spacing={2} sx={{ margin: '20px 0' }}>
+          {productListComponent}
+          <Stack direction='row' justifyContent='flex-end' spacing={2}>
+            {first === 0 ? null : <Button variant="contained" onClick={() => prevPage(first, last, setFirst, setLast)}>Previous</Button>}
+            {last === products.length ? null : <Button variant="contained" onClick={() => nextPage(first, last, setFirst, setLast)}>Next</Button>}
+          </Stack>
         </Stack>
+        {cartItems.length > 0
+          ? <Fab
+              variant="extended"
+              color="primary"
+              aria-label="check out"
+              onClick={() => navigate('/CheckOut')}
+              sx={{
+                margin: 0,
+                top: 'auto',
+                right: 250,
+                bottom: 20,
+                left: 'auto',
+                position: 'fixed'
+              }}>
+                <ShoppingCartIcon sx={{ mr: 1 }}/>
+              Check Out
+            </Fab>
+          : null}
     </Container>
   )
 }

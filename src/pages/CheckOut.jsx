@@ -17,16 +17,18 @@ export default function CheckOut () {
     )
   })
   return (
-    <Container>
+    <Container maxWidth="sm">
+      <Stack spacing={2}>
         {cartItems.length > 0
           ? <>
-              <Stack spacing={2}>
                 {cartListComponent}
-              </Stack>
-              <Button onClick={() => onBuy(products, dispatch, navigate)}>Buy Products</Button>
             </>
           : <Typography>Tidak ada barang</Typography> }
-          <Button onClick={() => navigate('/')}>Back to Home</Button>
+        <Stack direction='row' justifyContent='flex-end' spacing={2}>
+          <Button variant="contained" onClick={() => navigate('/')}>Back to Home</Button>
+          {cartItems.length > 0 ? <Button variant="contained" onClick={() => onBuy(products, dispatch, navigate)}>Buy Products</Button> : null }
+        </Stack>
+      </Stack>
     </Container>
   )
 }
