@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Button, Stack } from '@mui/material'
+import { Container, Button, Stack, Typography } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { onBuy } from '../utils/utils'
@@ -18,10 +18,15 @@ export default function CheckOut () {
   })
   return (
     <Container>
-        <Stack spacing={2}>
-            {cartListComponent}
-        </Stack>
-        <Button onClick={() => onBuy(products, dispatch, navigate)}>Buy Products</Button>
+        {cartItems.length > 0
+          ? <>
+              <Stack spacing={2}>
+                {cartListComponent}
+              </Stack>
+              <Button onClick={() => onBuy(products, dispatch, navigate)}>Buy Products</Button>
+            </>
+          : <Typography>Tidak ada barang</Typography> }
+          <Button onClick={() => navigate('/')}>Back to Home</Button>
     </Container>
   )
 }
