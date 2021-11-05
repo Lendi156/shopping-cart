@@ -22,7 +22,7 @@ export default function Home () {
 
   return (
     <Container maxWidth="sm">
-        <Stack spacing={2} sx={{ margin: '20px 0' }}>
+        <Stack spacing={2} sx={{ margin: '80px 0 20px' }}>
           {productListComponent}
           <Stack direction='row' justifyContent='flex-end' spacing={2}>
             {first === 0 ? null : <Button variant="contained" onClick={() => prevPage(first, last, setFirst, setLast)}>Previous</Button>}
@@ -38,7 +38,7 @@ export default function Home () {
               sx={{
                 margin: 0,
                 top: 'auto',
-                right: 250,
+                right: 200,
                 bottom: 20,
                 left: 'auto',
                 position: 'fixed'

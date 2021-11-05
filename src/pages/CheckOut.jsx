@@ -18,7 +18,7 @@ export default function CheckOut () {
   })
   return (
     <Container maxWidth="sm">
-      <Stack spacing={2}>
+      <Stack spacing={2} sx={{ margin: '80px 0 20px' }}>
         {cartItems.length > 0
           ? <>
                 {cartListComponent}
