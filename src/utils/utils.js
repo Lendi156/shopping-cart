@@ -77,3 +77,8 @@ export const nextPage = (first, last, setFirst, setLast) => {
   setFirst(first + 10)
   setLast(last + 10)
 }
+
+export const prevPage = (first, last, setFirst, setLast) => {
+  setFirst(first - 10)
+  setLast(last - 10)
+}
