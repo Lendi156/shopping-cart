@@ -1,7 +1,9 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Card, CardContent, Typography, Button } from '@mui/material'
+import { Card, CardContent, Typography, IconButton, CardActions } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add'
+import RemoveIcon from '@mui/icons-material/Remove'
 import { onAdd, onRemove } from '../utils/utils'
 
 export default function Product ({ product }) {
@@ -10,15 +12,21 @@ export default function Product ({ product }) {
   const cartItems = useSelector((state) => state.cartItems.cartItems)
 
   return (
-        <Card>
+        <Card sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <CardContent>
             <Typography>
               {product.title}
             </Typography>
-            <Button onClick={() => { onAdd(products, cartItems, product, dispatch) }} variant="contained">Add</Button>
-            <Typography>{product.qty}</Typography>
-            <Button disabled={product.qty === 0} onClick={() => { onRemove(products, cartItems, product, dispatch) }} variant="contained">Remove</Button>
           </CardContent>
+          <CardActions>
+            <IconButton onClick={() => { onAdd(products, cartItems, product, dispatch) }}>
+                <AddIcon />
+              </IconButton>
+              <Typography>{product.qty}</Typography>
+              <IconButton disabled={product.qty === 0} onClick={() => { onRemove(products, cartItems, product, dispatch) }}>
+                <RemoveIcon />
+            </IconButton>
+          </CardActions>
         </Card>
   )
 }
