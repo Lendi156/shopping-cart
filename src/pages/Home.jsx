@@ -8,9 +8,10 @@ export default function Home () {
   const navigate = useNavigate()
   const productListComponent = []
   const products = useSelector((state) => state.products.products)
-  products.forEach((product) => {
+  const tenProducts = products.slice(0, 10)
+  tenProducts.forEach((product) => {
     productListComponent.push(
-      <Product product={product} />
+      <Product product={product} key={product.id} />
     )
   })
   return (

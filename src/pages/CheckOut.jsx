@@ -13,7 +13,7 @@ export default function CheckOut () {
   const products = useSelector((state) => state.products.products)
   cartItems.forEach((product) => {
     cartListComponent.push(
-        <Product product={product} />
+        <Product product={product} key={product.id} />
     )
   })
   return (
