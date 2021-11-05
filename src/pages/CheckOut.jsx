@@ -33,8 +33,8 @@ export default function CheckOut () {
             </Card>
           </> }
         <Stack direction='row' justifyContent='flex-end' spacing={2}>
-          <Button variant="contained" onClick={() => navigate('/')}>Back to Home</Button>
-          {cartItems.length > 0 ? <Button variant="contained" onClick={() => onBuy(products, dispatch, navigate)}>Buy Products</Button> : null }
+          <Button variant="contained" onClick={() => navigate('/')}>Back</Button>
+          {cartItems.length > 0 ? <Button variant="contained" onClick={() => onBuy(products, dispatch, navigate)}>Beli</Button> : null }
         </Stack>
       </Stack>
     </Container>
